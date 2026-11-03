@@ -15,9 +15,18 @@ export class ApiError extends Error {
 
 const TOKEN_KEY = "proje_token"
 
+const PRODUCTION_API_URL = "https://staj-backend-production.up.railway.app"
+
 function apiUrl(path: string) {
-  const base = (import.meta.env.VITE_API_URL ?? "").trim().replace(/\/+$/, "")
-  return `${base}${path}`
+  const configured = (import.meta.env.VITE_API_URL ?? "").trim().replace(/\/+$/, "")
+  if (configured) return `${configured}${path}`
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname
+    if (host !== "localhost" && host !== "127.0.0.1") {
+      return `${PRODUCTION_API_URL}${path}`
+    }
+  }
+  return path
 }
 
 export function readToken(): string | null {
