@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function ContactPage() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [message, setMessage] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<{ sent: boolean; detail: string } | null>(null)
@@ -18,6 +20,7 @@ export function ContactPage() {
     event.preventDefault()
     const trimmedName = name.trim().replace(/\s+/g, " ")
     const trimmedEmail = email.trim()
+    const trimmedMessage = message.trim()
     if (trimmedName.length < 2) {
       setError("Ad soyad gerekli.")
       setNotice(null)
@@ -28,16 +31,22 @@ export function ContactPage() {
       setNotice(null)
       return
     }
+    if (!trimmedMessage) {
+      setError("Mesaj gerekli.")
+      setNotice(null)
+      return
+    }
 
     setSubmitting(true)
     setError(null)
     setNotice(null)
     try {
-      const result = await sendContact(trimmedName, trimmedEmail)
+      const result = await sendContact(trimmedName, trimmedEmail, trimmedMessage)
       setNotice(result)
       if (result.sent) {
         setName("")
         setEmail("")
+        setMessage("")
       }
     } catch (reason) {
       setError(reason instanceof ApiError ? reason.message : "Mesaj gönderilemedi.")
@@ -54,7 +63,7 @@ export function ContactPage() {
         </p>
         <h1 className="font-heading text-4xl tracking-tight text-foreground sm:text-5xl">İletişim</h1>
         <p className="max-w-xl text-muted-foreground">
-          Adınızı ve e-postanızı bırakın. Mesaj Resend ile proje ekibine gider; yanıtlar yazdığınız adrese döner.
+          Ad soyad, e-posta ve mesajınız e-posta olarak gider. Giriş gerekmez.
         </p>
       </header>
       <Card>
@@ -74,6 +83,21 @@ export function ContactPage() {
                   setNotice(null)
                 }}
                 className="h-10"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="contact-message">Mesaj</Label>
+              <Textarea
+                id="contact-message"
+                name="message"
+                value={message}
+                maxLength={4000}
+                onChange={(event) => {
+                  setMessage(event.target.value)
+                  setError(null)
+                  setNotice(null)
+                }}
+                className="min-h-36 text-base leading-relaxed md:text-base"
               />
             </div>
             <div className="space-y-2">

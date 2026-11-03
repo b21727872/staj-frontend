@@ -83,9 +83,9 @@ export function updateSection(slug: string, content: string) {
   })
 }
 
-export function sendContact(name: string, email: string) {
+export function sendContact(name: string, email: string, message: string) {
   return request<{ sent: boolean; detail: string }>("/api/contact", {
     method: "POST",
-    body: JSON.stringify({ name, email }),
+    body: JSON.stringify({ name, email, message }),
   })
 }
