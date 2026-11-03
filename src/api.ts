@@ -15,6 +15,11 @@ export class ApiError extends Error {
 
 const TOKEN_KEY = "proje_token"
 
+function apiUrl(path: string) {
+  const base = (import.meta.env.VITE_API_URL ?? "").trim().replace(/\/+$/, "")
+  return `${base}${path}`
+}
+
 export function readToken(): string | null {
   return sessionStorage.getItem(TOKEN_KEY)
 }
@@ -39,7 +44,7 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
 
   let response: Response
   try {
-    response = await fetch(path, { ...options, headers })
+    response = await fetch(apiUrl(path), { ...options, headers })
   } catch {
     throw new ApiError("Sunucuya ulaşılamadı. API çalışıyor mu kontrol edin.", 0)
   }
