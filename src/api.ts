@@ -15,6 +15,7 @@ export class ApiError extends Error {
 
 const TOKEN_KEY = "proje_token"
 
+const SITE_API_URL = "https://api.alisenol.org"
 const PRODUCTION_API_URL = "https://staj-backend-production.up.railway.app"
 
 function apiUrl(path: string) {
@@ -22,6 +23,9 @@ function apiUrl(path: string) {
   if (configured) return `${configured}${path}`
   if (typeof window !== "undefined") {
     const host = window.location.hostname
+    if (host === "alisenol.org" || host === "www.alisenol.org") {
+      return `${SITE_API_URL}${path}`
+    }
     if (host !== "localhost" && host !== "127.0.0.1") {
       return `${PRODUCTION_API_URL}${path}`
     }
