@@ -95,10 +95,6 @@ export function LoginPage() {
           <Button type="submit" className="h-10 w-full px-4" disabled={submitting}>
             {submitting ? "Giriş yapılıyor…" : "Giriş yap"}
           </Button>
-          <p className="text-xs leading-relaxed text-muted-foreground">
-            Deneme hesabı: <span className="font-medium text-foreground">admin</span> /{" "}
-            <span className="font-medium text-foreground">proje2026</span>
-          </p>
         </form>
       </CardContent>
     </Card>

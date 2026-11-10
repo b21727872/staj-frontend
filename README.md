@@ -13,8 +13,6 @@ npm run dev
 
 Tarayıcıda [http://127.0.0.1:43127](http://127.0.0.1:43127) adresini açın. `/api` istekleri API sunucusuna gider.
 
-Deneme hesabı: `admin` / `proje2026`
-
 ## Production
 
 API adresini build sırasında verin. Değer backend’in kök adresidir; sonuna `/` veya `/api` eklemeyin.
