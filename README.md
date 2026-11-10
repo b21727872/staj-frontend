@@ -20,9 +20,7 @@ Deneme hesabı: `admin` / `proje2026`
 API adresini build sırasında verin. Değer backend’in kök adresidir; sonuna `/` veya `/api` eklemeyin.
 
 ```bash
-VITE_API_URL=https://api.alisenol.org npm run build
+VITE_API_URL=https://staj-backend-production.up.railway.app npm run build
 ```
 
-`alisenol.org` ve `www.alisenol.org` üzerinde bu değişken boşsa istekler `https://api.alisenol.org` adresine gider. Diğer canlı adreslerde Railway API’si kullanılır. Yerelde istekler aynı sitedeki `/api` yoluna gider.
-
-Vercel’de `alisenol.org` ve `www.alisenol.org` domain’lerini ekleyin. API için Railway’de `api.alisenol.org` domain’ini ekleyin.
+Bu değişken boşsa canlı site Railway API’sine gider. Yerelde istekler aynı sitedeki `/api` yoluna gider. Vercel’de `VITE_API_URL` tanımlıysa onu kaldırın veya Railway adresine çevirin; aksi halde eski adres kullanılmaya devam eder.
